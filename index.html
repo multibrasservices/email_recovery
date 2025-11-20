@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Réinitialisation de mot de passe</title>
+  <title>Réinitialisation de mot de passe demandée</title>
   <style>
     /* Reset & Base */
     body {
@@ -35,23 +35,8 @@
       overflow: hidden;
     }
 
-    .card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-image: url('logo/mon_logo.png');
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      /* Adjusted to fill the card */
-      opacity: 0.05;
-      /* Subtle watermark */
-      z-index: 0;
-      pointer-events: none;
-    }
+    /* Watermark removed for simplicity */
+    /* .card::before removed */
 
     .card>* {
       position: relative;
@@ -131,15 +116,12 @@
     <div class="card">
       <!-- Logo removed as per request, now in background -->
 
-      <h2>Réinitialisation de mot de passe</h2>
-
-      <p>Nous avons reçu une demande de réinitialisation de mot de passe pour votre compte. Si vous êtes à l'origine de
-        cette demande, cliquez sur le bouton ci-dessous :</p>
+      <h2>Réinitialisation de mot de passe demandée</h2>
 
       <a href="{{ .ConfirmationURL }}" class="btn">Changer mon mot de passe</a>
 
       <div class="footer">
-        <p>Si vous n'avez pas demandé de réinitialisation, vous pouvez ignorer cet e-mail en toute sécurité.</p>
+        <p>Ignorez cet email si vous n'avez rien demandé.</p>
       </div>
     </div>
   </div>
