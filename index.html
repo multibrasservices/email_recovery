@@ -1,9 +1,148 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Réinitialisation de mot de passe</title>
+  <style>
+    /* Reset & Base */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #333333;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      padding: 40px;
+      text-align: center;
+      /* border-top removed to match screenshot */
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('logo/mon_logo.png');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      /* Adjusted to fill the card */
+      opacity: 0.05;
+      /* Subtle watermark */
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .card>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Elements */
+    /* Logo class removed as img is removed */
+
+    h2 {
+      color: #008080;
+      /* Teal text for title */
+      font-size: 24px;
+      margin-bottom: 20px;
+      font-weight: 600;
+      border-bottom: 2px solid #008080;
+      /* Underline */
+      display: inline-block;
+      padding-bottom: 10px;
+      margin-top: 20px;
+      /* Added top margin since logo is gone */
+    }
+
+    p {
+      color: #555555;
+      margin-bottom: 24px;
+      font-size: 16px;
+    }
+
+    .token-box {
+      background-color: #f0fdfa;
+      /* Very light teal */
+      border: 1px dashed #008080;
+      color: #008080;
+      font-size: 24px;
+      font-weight: 700;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 24px 0;
+      letter-spacing: 2px;
+      display: inline-block;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: #008080;
+      color: #ffffff !important;
+      text-decoration: none;
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      transition: background-color 0.2s ease;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background-color: #006666;
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 12px;
+      color: #888888;
+      text-align: center;
+    }
+
+    .footer a {
+      color: #888888;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
 <body>
-  <h2>Réinitialisation de mot de passe</h2>
-  <p>Voici votre code : <strong>{{ .Token }}</strong></p>
-  <p>Ou cliquez directement ici :</p>
-  <a href="{{ .ConfirmationURL }}">Changer mon mot de passe</a>
+  <div class="container">
+    <div class="card">
+      <!-- Logo removed as per request, now in background -->
+
+      <h2>Réinitialisation de mot de passe</h2>
+
+      <p>Nous avons reçu une demande de réinitialisation de mot de passe pour votre compte. Si vous êtes à l'origine de
+        cette demande, cliquez sur le bouton ci-dessous :</p>
+
+      <a href="{{ .ConfirmationURL }}" class="btn">Changer mon mot de passe</a>
+
+      <div class="footer">
+        <p>Si vous n'avez pas demandé de réinitialisation, vous pouvez ignorer cet e-mail en toute sécurité.</p>
+      </div>
+    </div>
+  </div>
 </body>
+
 </html>
