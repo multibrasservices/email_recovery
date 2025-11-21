@@ -4,9 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Réinitialisation de mot de passe</title>
+    <title>Code de vérification</title>
     <style>
-        /* Reset & Base */
         body {
             margin: 0;
             padding: 0;
@@ -14,10 +13,8 @@
             background-color: #f8f9fa;
             color: #333333;
             line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
         }
 
-        /* Layout */
         .container {
             max-width: 600px;
             margin: 40px auto;
@@ -30,25 +27,13 @@
             box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
             padding: 40px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
 
-        .card>* {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Elements */
         h2 {
             color: #008080;
             font-size: 24px;
             margin-bottom: 20px;
             font-weight: 600;
-            border-bottom: 2px solid #008080;
-            display: inline-block;
-            padding-bottom: 10px;
-            margin-top: 20px;
         }
 
         p {
@@ -57,7 +42,6 @@
             font-size: 16px;
         }
 
-        /* OTP Code Box */
         .code-box {
             background: linear-gradient(135deg, #008080 0%, #006666 100%);
             color: #ffffff;
@@ -87,39 +71,11 @@
             color: #008080;
         }
 
-        /* Magic Link Button */
-        .btn {
-            display: inline-block;
-            background-color: #008080;
-            color: #ffffff !important;
-            text-decoration: none;
-            padding: 14px 32px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 16px;
-            transition: background-color 0.2s ease;
-            margin-top: 10px;
-        }
-
-        .btn:hover {
-            background-color: #006666;
-        }
-
         .footer {
             margin-top: 30px;
             font-size: 12px;
             color: #888888;
             text-align: center;
-        }
-
-        .footer a {
-            color: #888888;
-            text-decoration: underline;
-        }
-
-        .emoji {
-            font-size: 32px;
-            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -127,38 +83,22 @@
 <body>
     <div class="container">
         <div class="card">
-            {{ if .Token }}
-            <!-- OTP Mode: Display the 6-digit code -->
-            <div class="emoji">🔐</div>
-            <h2>Votre code de vérification</h2>
+            <h2>🔐 Votre code de vérification</h2>
             <p>Utilisez ce code pour réinitialiser votre mot de passe :</p>
 
             <div class="code-box">{{ .Token }}</div>
 
             <div class="info-box">
                 <p><strong>⏱️ Validité :</strong> Ce code expire dans 60 minutes</p>
-                <p><strong>🔒 Sécurité :</strong> Ne partagez jamais ce code avec personne</p>
+                <p><strong>🔒 Sécurité :</strong> Ne partagez jamais ce code</p>
             </div>
 
             <p style="font-size: 14px; color: #666;">
                 Entrez ce code sur la page de connexion pour continuer.
             </p>
-            {{ else }}
-            <!-- Magic Link Mode: Display the button -->
-            <h2>Réinitialisation de mot de passe demandée</h2>
-            <p>Cliquez sur le bouton ci-dessous pour réinitialiser votre mot de passe :</p>
-
-            <a href="{{ .ConfirmationURL }}" class="btn">Changer mon mot de passe</a>
-            {{ end }}
 
             <div class="footer">
                 <p>Ignorez cet email si vous n'avez rien demandé.</p>
-                {{ if .Token }}
-                <p style="margin-top: 10px;">
-                    <strong>💡 Astuce :</strong> Cette méthode par code est recommandée pour les adresses emails
-                    professionnelles.
-                </p>
-                {{ end }}
             </div>
         </div>
     </div>
