@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Réinitialisation de mot de passe demandée</title>
+  <title>Réinitialisation de mot de passe</title>
   <style>
     /* Reset & Base */
     body {
@@ -30,13 +30,9 @@
       box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
       padding: 40px;
       text-align: center;
-      /* border-top removed to match screenshot */
       position: relative;
       overflow: hidden;
     }
-
-    /* Watermark removed for simplicity */
-    /* .card::before removed */
 
     .card>* {
       position: relative;
@@ -44,20 +40,15 @@
     }
 
     /* Elements */
-    /* Logo class removed as img is removed */
-
     h2 {
       color: #008080;
-      /* Teal text for title */
       font-size: 24px;
       margin-bottom: 20px;
       font-weight: 600;
       border-bottom: 2px solid #008080;
-      /* Underline */
       display: inline-block;
       padding-bottom: 10px;
       margin-top: 20px;
-      /* Added top margin since logo is gone */
     }
 
     p {
@@ -66,20 +57,37 @@
       font-size: 16px;
     }
 
-    .token-box {
-      background-color: #f0fdfa;
-      /* Very light teal */
-      border: 1px dashed #008080;
-      color: #008080;
-      font-size: 24px;
+    /* OTP Code Box */
+    .code-box {
+      background: linear-gradient(135deg, #008080 0%, #006666 100%);
+      color: #ffffff;
+      font-size: 48px;
       font-weight: 700;
+      padding: 24px 40px;
+      border-radius: 12px;
+      margin: 32px 0;
+      letter-spacing: 8px;
+      display: inline-block;
+      box-shadow: 0 8px 16px rgba(0, 128, 128, 0.3);
+      font-family: 'Courier New', monospace;
+    }
+
+    .info-box {
+      background-color: #f0fdfa;
+      border-left: 4px solid #008080;
       padding: 16px;
       border-radius: 8px;
       margin: 24px 0;
-      letter-spacing: 2px;
-      display: inline-block;
+      text-align: left;
     }
 
+    .info-box p {
+      margin: 8px 0;
+      font-size: 14px;
+      color: #008080;
+    }
+
+    /* Magic Link Button */
     .btn {
       display: inline-block;
       background-color: #008080;
@@ -108,20 +116,48 @@
       color: #888888;
       text-decoration: underline;
     }
+
+    .emoji {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 
 <body>
   <div class="container">
     <div class="card">
-      <!-- Logo removed as per request, now in background -->
+      {{ if .Token }}
+      <!-- OTP Mode: Display the 6-digit code -->
+      <div class="emoji">🔐</div>
+      <h2>Votre code de vérification</h2>
+      <p>Utilisez ce code pour réinitialiser votre mot de passe :</p>
 
+      <div class="code-box">{{ .Token }}</div>
+
+      <div class="info-box">
+        <p><strong>⏱️ Validité :</strong> Ce code expire dans 60 minutes</p>
+        <p><strong>🔒 Sécurité :</strong> Ne partagez jamais ce code avec personne</p>
+      </div>
+
+      <p style="font-size: 14px; color: #666;">
+        Entrez ce code sur la page de connexion pour continuer.
+      </p>
+      {{ else }}
+      <!-- Magic Link Mode: Display the button -->
       <h2>Réinitialisation de mot de passe demandée</h2>
+      <p>Cliquez sur le bouton ci-dessous pour réinitialiser votre mot de passe :</p>
 
       <a href="{{ .ConfirmationURL }}" class="btn">Changer mon mot de passe</a>
+      {{ end }}
 
       <div class="footer">
         <p>Ignorez cet email si vous n'avez rien demandé.</p>
+        {{ if .Token }}
+        <p style="margin-top: 10px;">
+          <strong>💡 Astuce :</strong> Cette méthode par code est recommandée pour les adresses emails professionnelles.
+        </p>
+        {{ end }}
       </div>
     </div>
   </div>
