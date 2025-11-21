@@ -54,6 +54,26 @@
             display: inline-block;
             box-shadow: 0 8px 16px rgba(0, 128, 128, 0.3);
             font-family: 'Courier New', monospace;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .code-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0, 128, 128, 0.4);
+        }
+
+        .code-box:active {
+            transform: translateY(0);
+        }
+
+        .copy-hint {
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+            font-weight: normal;
+            letter-spacing: normal;
         }
 
         .info-box {
@@ -77,6 +97,49 @@
             color: #888888;
             text-align: center;
         }
+
+        .copied-feedback {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #28a745;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: none;
+        }
+
+        .copied-feedback.show {
+            display: block;
+            animation: fadeInOut 2s ease;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+
+            20% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            80% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+        }
     </style>
 </head>
 
@@ -86,7 +149,10 @@
             <h2>🔐 Votre code de vérification</h2>
             <p>Utilisez ce code pour réinitialiser votre mot de passe :</p>
 
-            <div class="code-box">{{ .Token }}</div>
+            <div class="code-box" id="codeBox" onclick="copyCode()" title="Cliquez pour copier">
+                {{ .Token }}
+            </div>
+            <p class="copy-hint">👆 Cliquez sur le code pour le copier</p>
 
             <div class="info-box">
                 <p><strong>⏱️ Validité :</strong> Ce code expire dans 60 minutes</p>
@@ -102,6 +168,41 @@
             </div>
         </div>
     </div>
+
+    <div class="copied-feedback" id="copiedFeedback">✓ Code copié !</div>
+
+    <script>
+        function copyCode() {
+            const codeBox = document.getElementById('codeBox');
+            const code = codeBox.textContent.trim();
+
+            // Copier dans le presse-papiers
+            navigator.clipboard.writeText(code).then(function () {
+                // Afficher le feedback
+                const feedback = document.getElementById('copiedFeedback');
+                feedback.classList.add('show');
+
+                // Masquer après 2 secondes
+                setTimeout(function () {
+                    feedback.classList.remove('show');
+                }, 2000);
+            }).catch(function (err) {
+                // Fallback pour les anciens navigateurs
+                const textArea = document.createElement('textarea');
+                textArea.value = code;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+
+                const feedback = document.getElementById('copiedFeedback');
+                feedback.classList.add('show');
+                setTimeout(function () {
+                    feedback.classList.remove('show');
+                }, 2000);
+            });
+        }
+    </script>
 </body>
 
 </html>
