@@ -43,10 +43,6 @@
         }
 
         .code-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
             margin: 32px 0;
         }
 
@@ -61,41 +57,27 @@
             display: inline-block;
             box-shadow: 0 8px 16px rgba(0, 128, 128, 0.3);
             font-family: 'Courier New', monospace;
+            user-select: all;
+            -webkit-user-select: all;
+            -moz-user-select: all;
+            -ms-user-select: all;
         }
 
-        .copy-button {
-            background: #008080;
-            color: white;
-            border: none;
-            padding: 12px 24px;
+        .copy-instruction {
+            background-color: #fff3cd;
+            border: 2px dashed #ffc107;
             border-radius: 8px;
+            padding: 12px 20px;
+            margin: 16px auto;
+            max-width: 400px;
             font-size: 14px;
+            color: #856404;
             font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 128, 128, 0.2);
         }
 
-        .copy-button:hover {
-            background: #006666;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 128, 128, 0.3);
-        }
-
-        .copy-button:active {
-            transform: translateY(0);
-        }
-
-        .copy-button.copied {
-            background: #28a745;
-        }
-
-        .copy-icon {
-            width: 16px;
-            height: 16px;
+        .copy-instruction::before {
+            content: "💡 ";
+            font-size: 18px;
         }
 
         .info-box {
@@ -119,49 +101,6 @@
             color: #888888;
             text-align: center;
         }
-
-        .copied-feedback {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #28a745;
-            color: white;
-            padding: 16px 32px;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            display: none;
-        }
-
-        .copied-feedback.show {
-            display: block;
-            animation: fadeInOut 2s ease;
-        }
-
-        @keyframes fadeInOut {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.8);
-            }
-
-            20% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-
-            80% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-
-            100% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.8);
-            }
-        }
     </style>
 </head>
 
@@ -172,16 +111,11 @@
             <p>Utilisez ce code pour réinitialiser votre mot de passe :</p>
 
             <div class="code-container">
-                <div class="code-box" id="codeBox">
-                    {{ .Token }}
-                </div>
-                <button class="copy-button" id="copyButton" onclick="copyCode()">
-                    <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                    <span id="buttonText">Copier le code</span>
-                </button>
+                <div class="code-box">{{ .Token }}</div>
+            </div>
+
+            <div class="copy-instruction">
+                Sélectionnez le code ci-dessus et copiez-le (Ctrl+C ou clic droit → Copier)
             </div>
 
             <div class="info-box">
@@ -198,55 +132,6 @@
             </div>
         </div>
     </div>
-
-    <div class="copied-feedback" id="copiedFeedback">✓ Code copié !</div>
-
-    <script>
-        function copyCode() {
-            const codeBox = document.getElementById('codeBox');
-            const code = codeBox.textContent.trim();
-            const button = document.getElementById('copyButton');
-            const buttonText = document.getElementById('buttonText');
-
-            // Copier dans le presse-papiers
-            navigator.clipboard.writeText(code).then(function () {
-                // Afficher le feedback sur le bouton
-                button.classList.add('copied');
-                buttonText.textContent = '✓ Copié !';
-
-                // Afficher aussi le feedback modal
-                const feedback = document.getElementById('copiedFeedback');
-                feedback.classList.add('show');
-
-                // Réinitialiser après 2 secondes
-                setTimeout(function () {
-                    button.classList.remove('copied');
-                    buttonText.textContent = 'Copier le code';
-                    feedback.classList.remove('show');
-                }, 2000);
-            }).catch(function (err) {
-                // Fallback pour les anciens navigateurs
-                const textArea = document.createElement('textarea');
-                textArea.value = code;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-
-                // Feedback
-                button.classList.add('copied');
-                buttonText.textContent = '✓ Copié !';
-                const feedback = document.getElementById('copiedFeedback');
-                feedback.classList.add('show');
-
-                setTimeout(function () {
-                    button.classList.remove('copied');
-                    buttonText.textContent = 'Copier le code';
-                    feedback.classList.remove('show');
-                }, 2000);
-            });
-        }
-    </script>
 </body>
 
 </html>
