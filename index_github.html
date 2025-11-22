@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code de vérification</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #008080;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        p {
+            color: #555555;
+            margin-bottom: 24px;
+            font-size: 16px;
+        }
+
+        .code-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        .code-box {
+            background: linear-gradient(135deg, #008080 0%, #006666 100%);
+            color: #ffffff;
+            font-size: 48px;
+            font-weight: 700;
+            padding: 24px 40px;
+            border-radius: 12px;
+            letter-spacing: 8px;
+            display: inline-block;
+            box-shadow: 0 8px 16px rgba(0, 128, 128, 0.3);
+            font-family: 'Courier New', monospace;
+        }
+
+        .copy-button {
+            background: #008080;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 128, 128, 0.2);
+        }
+
+        .copy-button:hover {
+            background: #006666;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 128, 128, 0.3);
+        }
+
+        .copy-button:active {
+            transform: translateY(0);
+        }
+
+        .copy-button.copied {
+            background: #28a745;
+        }
+
+        .copy-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .info-box {
+            background-color: #f0fdfa;
+            border-left: 4px solid #008080;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 24px 0;
+            text-align: left;
+        }
+
+        .info-box p {
+            margin: 8px 0;
+            font-size: 14px;
+            color: #008080;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #888888;
+            text-align: center;
+        }
+
+        .copied-feedback {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #28a745;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: none;
+        }
+
+        .copied-feedback.show {
+            display: block;
+            animation: fadeInOut 2s ease;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+
+            20% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            80% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <h2>🔐 Votre code de vérification</h2>
+            <p>Utilisez ce code pour réinitialiser votre mot de passe :</p>
+
+            <div class="code-container">
+                <div class="code-box" id="codeBox">
+                    {{ .Token }}
+                </div>
+                <button class="copy-button" id="copyButton" onclick="copyCode()">
+                    <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span id="buttonText">Copier le code</span>
+                </button>
+            </div>
+
+            <div class="info-box">
+                <p><strong>⏱️ Validité :</strong> Ce code expire dans 60 minutes</p>
+                <p><strong>🔒 Sécurité :</strong> Ne partagez jamais ce code</p>
+            </div>
+
+            <p style="font-size: 14px; color: #666;">
+                Entrez ce code sur la page de connexion pour continuer.
+            </p>
+
+            <div class="footer">
+                <p>Ignorez cet email si vous n'avez rien demandé.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="copied-feedback" id="copiedFeedback">✓ Code copié !</div>
+
+    <script>
+        function copyCode() {
+            const codeBox = document.getElementById('codeBox');
+            const code = codeBox.textContent.trim();
+            const button = document.getElementById('copyButton');
+            const buttonText = document.getElementById('buttonText');
+
+            // Copier dans le presse-papiers
+            navigator.clipboard.writeText(code).then(function () {
+                // Afficher le feedback sur le bouton
+                button.classList.add('copied');
+                buttonText.textContent = '✓ Copié !';
+
+                // Afficher aussi le feedback modal
+                const feedback = document.getElementById('copiedFeedback');
+                feedback.classList.add('show');
+
+                // Réinitialiser après 2 secondes
+                setTimeout(function () {
+                    button.classList.remove('copied');
+                    buttonText.textContent = 'Copier le code';
+                    feedback.classList.remove('show');
+                }, 2000);
+            }).catch(function (err) {
+                // Fallback pour les anciens navigateurs
+                const textArea = document.createElement('textarea');
+                textArea.value = code;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+
+                // Feedback
+                button.classList.add('copied');
+                buttonText.textContent = '✓ Copié !';
+                const feedback = document.getElementById('copiedFeedback');
+                feedback.classList.add('show');
+
+                setTimeout(function () {
+                    button.classList.remove('copied');
+                    buttonText.textContent = 'Copier le code';
+                    feedback.classList.remove('show');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+
+</html>
