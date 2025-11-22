@@ -7,94 +7,31 @@
     <title>Code de vérification</title>
 </head>
 
-<body
-    style="margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8f9fa; color: #333333; line-height: 1.6;">
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f8f9fa;">
+<body style="margin: 0; padding: 20px; font-family: Arial, sans-serif; background-color: #f5f5f5;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-            <td align="center" style="padding: 40px 20px;">
-                <table width="600" cellpadding="0" cellspacing="0" border="0"
-                    style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);">
+            <td align="center">
+                <table width="600" cellpadding="40" cellspacing="0" border="0"
+                    style="background-color: #ffffff; border-radius: 8px;">
                     <tr>
-                        <td style="padding: 40px; text-align: center;">
+                        <td align="center">
 
-                            <!-- Header -->
-                            <h2
-                                style="color: #008080; font-size: 24px; margin-bottom: 20px; font-weight: 600; border-bottom: 2px solid #008080; display: inline-block; padding-bottom: 10px;">
-                                🔐 Votre code de vérification
-                            </h2>
+                            <h2 style="color: #008080; margin: 0 0 20px 0;">Code de vérification</h2>
 
-                            <p style="color: #555555; margin-bottom: 24px; font-size: 16px;">
-                                Utilisez ce code pour réinitialiser votre mot de passe :
-                            </p>
-
-                            <!-- Code Box with Table for better email compatibility -->
-                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 32px 0;">
-                                <tr>
-                                    <td align="center">
-                                        <table cellpadding="20" cellspacing="0" border="0"
-                                            style="background: linear-gradient(135deg, #008080 0%, #006666 100%); background-color: #008080; border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 128, 128, 0.3);">
-                                            <tr>
-                                                <td
-                                                    style="color: #ffffff; font-size: 48px; font-weight: 700; letter-spacing: 8px; font-family: 'Courier New', monospace; text-align: center; padding: 24px 40px;">
-                                                    {{ .Token }}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <!-- Copy Instruction -->
-                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 16px 0;">
-                                <tr>
-                                    <td align="center">
-                                        <div
-                                            style="background-color: #fff3cd; border: 2px dashed #ffc107; border-radius: 8px; padding: 12px 20px; max-width: 400px; font-size: 14px; color: #856404; font-weight: 600; display: inline-block;">
-                                            💡 Sélectionnez le code ci-dessus avec votre souris, puis copiez-le (Ctrl+C
-                                            ou clic droit → Copier)
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <!-- Alternative: Code in plain text for easy copy -->
-                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 16px 0;">
-                                <tr>
-                                    <td align="center">
-                                        <p style="font-size: 12px; color: #666; margin: 8px 0;">
-                                            Ou copiez directement depuis ici :
-                                        </p>
-                                        <div
-                                            style="background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; padding: 8px 16px; font-family: 'Courier New', monospace; font-size: 20px; font-weight: 600; color: #008080; display: inline-block; letter-spacing: 2px;">
-                                            {{ .Token }}
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <!-- Info Box -->
-                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 24px 0;">
+                            <!-- Code dans un tableau -->
+                            <table cellpadding="20" cellspacing="0" border="0"
+                                style="background-color: #008080; border-radius: 8px; margin: 0 auto;">
                                 <tr>
                                     <td
-                                        style="background-color: #f0fdfa; border-left: 4px solid #008080; padding: 16px; border-radius: 8px; text-align: left;">
-                                        <p style="margin: 8px 0; font-size: 14px; color: #008080;">
-                                            <strong>⏱️ Validité :</strong> Ce code expire dans 60 minutes
-                                        </p>
-                                        <p style="margin: 8px 0; font-size: 14px; color: #008080;">
-                                            <strong>🔒 Sécurité :</strong> Ne partagez jamais ce code
-                                        </p>
+                                        style="color: #ffffff; font-size: 36px; font-weight: bold; letter-spacing: 4px; font-family: 'Courier New', monospace; text-align: center;">
+                                        {{ .Token }}
                                     </td>
                                 </tr>
                             </table>
 
-                            <p style="font-size: 14px; color: #666;">
-                                Entrez ce code sur la page de connexion pour continuer.
+                            <p style="color: #666666; font-size: 14px; margin: 20px 0 0 0;">
+                                Expire dans 60 minutes
                             </p>
-
-                            <!-- Footer -->
-                            <div style="margin-top: 30px; font-size: 12px; color: #888888; text-align: center;">
-                                <p>Ignorez cet email si vous n'avez rien demandé.</p>
-                            </div>
 
                         </td>
                     </tr>
