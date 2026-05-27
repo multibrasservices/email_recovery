@@ -1,18 +1,37 @@
+*version 27.05.26-1*
+
 # Custom Recovery Page for Supabase
 
 Ce projet héberge une page de récupération de mot de passe personnalisée pour Supabase, hébergée via GitHub Pages.
 
-## URL de la Page
-**URL hébergée :** `https://multibrasservices.github.io/email_recovery/`
+## URLs
+
+| Template | URL | Usage |
+|----------|-----|-------|
+| Hardcodé (`saas.zoomali.io`) | `https://multibrasservices.github.io/email_recovery/` | Ancien projet — ne pas modifier |
+| Dynamique (`{{ .RedirectTo }}`) | `https://multibrasservices.github.io/email_recovery/dynamic/` | Nouvelle infra multi-sites |
 
 ## Configuration Supabase (sur Coolify)
 
-Pour configurer votre instance Supabase afin qu'elle utilise cette page personnalisée pour les emails de récupération, ajoutez la variable d'environnement suivante dans votre configuration Coolify :
+Pour une infra multi-sites, utiliser le template dynamique :
 
 ```env
-MAILER_TEMPLATES_RECOVERY=https://multibrasservices.github.io/email_recovery/
+MAILER_TEMPLATES_RECOVERY=https://multibrasservices.github.io/email_recovery/dynamic/
+MAILER_TEMPLATES_CONFIRMATION=https://multibrasservices.github.io/email_recovery/dynamic/
+MAILER_TEMPLATES_MAGIC_LINK=https://multibrasservices.github.io/email_recovery/dynamic/
+MAILER_TEMPLATES_INVITE=https://multibrasservices.github.io/email_recovery/dynamic/
+MAILER_TEMPLATES_EMAIL_CHANGE=https://multibrasservices.github.io/email_recovery/dynamic/
+ADDITIONAL_REDIRECT_URLS=https://*.zoomali.io/**,https://*.zoomali.fr/**,https://*.multibrasservices.com/**
+```
+
+Chaque app doit passer `redirectTo` lors de l'appel SDK :
+
+```ts
+await supabase.auth.resetPasswordForEmail(email, {
+  redirectTo: `${window.location.origin}/reset-password`,
+})
 ```
 
 ### Notes
-- Cette configuration force Supabase à rediriger l'utilisateur vers cette URL spécifique lors du clic sur le lien de récupération dans l'email.
-- Les fichiers `go_true.md` et `mdp_oublié.md` présents dans ce dossier contiennent des détails supplémentaires sur le fonctionnement interne et le débogage si nécessaire.
+- Le template `/dynamic/` utilise `{{ .RedirectTo }}` — l'URL est injectée dynamiquement par GoTrue depuis le paramètre `redirectTo` de l'appel SDK.
+- Le template `/` (racine) reste hardcodé sur `saas.zoomali.io` pour ne pas casser l'ancien projet.
