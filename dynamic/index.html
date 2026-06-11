@@ -22,22 +22,17 @@
                                 style="background-color: #008080; border-radius: 8px; margin: 0 auto;">
                                 <tr>
                                     <td
-                                        style="color: #ffffff; font-size: 36px; font-weight: bold; letter-spacing: 4px; font-family: 'Courier New', monospace; text-align: center;">
+                                        style="color: #ffffff; font-size: 48px; font-weight: bold; letter-spacing: 8px; font-family: 'Courier New', monospace; text-align: center;">
                                         {{ .Token }}
                                     </td>
                                 </tr>
                             </table>
 
-                            <p style="color: #666666; font-size: 14px; margin: 20px 0 10px 0;">
+                            <p style="color: #666666; font-size: 14px; margin: 20px 0 0 0;">
                                 Expire dans 60 minutes
                             </p>
 
-                            <button onclick="navigator.clipboard.writeText('{{ .Token }}').then(() => { this.textContent = '✓ Copié !'; setTimeout(() => { this.textContent = 'Copier le code'; }, 2000); })"
-                                style="background-color: #f0f0f0; border: 1px solid #cccccc; border-radius: 6px; color: #333333; cursor: pointer; font-size: 14px; padding: 8px 20px; margin: 0 0 20px 0;">
-                                Copier le code
-                            </button>
-
-                            <p style="color: #888888; font-size: 13px; margin: 10px 0 0 0; font-style: italic;">
+                            <p style="color: #888888; font-size: 13px; margin: 16px 0 0 0; font-style: italic;">
                                 Retournez sur l'onglet où vous avez demandé ce code et saisissez-le.
                             </p>
 
